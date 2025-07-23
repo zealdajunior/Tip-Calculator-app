@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tip-calculator</title>
+</head>
+<style>
+    @font-face {
+        font-family: Space mono;
+        src: url('https://fonts.google.com/specimen/Space+Mono');
+    }
+    :root{
+    --Green900: hsl(183, 100%, 15%);
+    --Grey500 : hsl(186, 14%, 43%);
+    --Grey400 : hsl(184, 14%, 56%);
+    --Grey200 : hsl(185, 41%, 84%);
+    --Grey50 : hsl(189, 47%, 97%);
+    --White: hsl(0, 100%, 100%);
+    }
+    body{
+        margin: 0;
+        padding: 0;
+        background-color: var(--Grey400);
+        height: 100vh;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+    }
+    main{
+        display: flex;
+        
+        border-radius: 20px;
+        justify-content: space-around;
+        padding: 30px; 
+        background-color: var(--Grey50);
+        width: 80%;
+        height: 65%;
+    }
+    input{
+        font-size:24px;
+    }
+    h5{
+        font-size: 32px;
+        color: var(--Grey500);
+        margin-bottom: 5px;
+    }
+    h1{
+        font-size: 40px;
+        color: var(--White);
+    }
+
+    #style1{
+        bottom: 67.5%;
+        left:15%;
+        width: 20px;
+        position: absolute;
+        z-index: 1;
+    }
+    #style2{
+        bottom: 26%;
+        left: 15%;
+        width: 20px;
+        position: absolute;
+        z-index: 1; 
+    }
+    .percentages{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .sub-percentages{
+        display: flex;
+        gap: 14px;
+        margin-bottom: .5em;
+    }
+    #btn{
+        background-color: var(--Green900);
+        color: var(--White);
+        padding: 5px;
+        border-radius: 5px;
+        width: 8em;
+        height: 2.5em;
+        border: none;
+        transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    #btn:hover{
+        background-color:aqua;
+    }
+    #special-btn{
+        width: 8em;
+        border-radius: 5px;
+        border: none;
+        color: var(--Grey500);
+        transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    #special-btn:hover{
+        background-color: var(--Green900);
+        color: var(--White);
+    }
+    .right-section{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--Green900);
+        border-radius: 10px;
+        width: 45%;
+        height: 92%;
+        padding: 20px;
+        justify-content: space-between;
+    }
+    .left-section{
+        margin-left: 30px;
+    }
+    #amount,#amount1{
+        border: 0px;
+        border-radius: 5px;
+        background-color: var(--Grey200);
+        height: 55px;
+        text-align: right;
+        position: relative;
+        padding: 10px;
+        width: 585px;
+    }
+    .display{
+        display: flex;
+        align-items: center;
+        gap: 400px;
+    }
+    .sub-display{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .Tip-Amount{
+        display: flex;
+        flex-direction: column;
+    }
+    #dollar{
+        width: 20px;
+        height: 23px;
+    }
+    .Reset{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 11%;
+        
+    }
+    #reset{
+        background-color: var(--Grey400);
+        color: var(--Green900);
+        margin-bottom: 60px;
+        border-radius: 5px;
+        width:48em;
+        height: 5em;
+        border: 0px;
+        transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    #reset:hover{
+        background-color: aqua;
+    }
+    #errEmpty,.negative-human{
+        color: red;
+        font-size: 24px;
+    }
+    @media screen and (max-width: 768px) {
+    main {
+        flex-direction: column;
+        height: auto;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .left-section, .right-section {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .left-section {
+        margin-bottom: 30px;
+    }
+
+    #amount, #amount1 {
+        width: 100%;
+    }
+
+    .display {
+        gap: 60px;
+        justify-content: space-between;
+    }
+
+    .Reset {
+        height: auto;
+    }
+
+    #reset {
+        width: 100%;
+        height: 3em;
+        font-size: 18px;
+    }
+
+    .sub-percentages {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    #btn, #special-btn {
+        width: 48%;
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h5 {
+        font-size: 24px;
+    }
+
+    #dollar {
+        width: 16px;
+        height: 18px;
+    }
+
+    .right-section {
+        padding: 15px;
+    }
+
+    #style1,
+    #style2 {
+        display: none; 
+    }
+}
+
+
+</style>
+<body>
+    <main>
+        <section>
+            <div class="left-section">
+                <div class="bill-input">
+                    <h5>Bill</h5>
+                    <div class="input">
+                        <img src="./icons/icon-dollar.svg" id="style1">
+                        <input type="number" id="amount1">
+                        <div id="errEmpty"></div>
+                    </div>
+                </div>
+                <div class="percentages">
+                    <h5>Select Tip %</h5>
+                    <div class="sub-percentages">
+                        <input type="button" value="5%" id="btn" class="btn" onclick="calculate(5),error()">
+                        <input type="button" value="10%" id="btn" class="btn1" onclick="calculate(10)">
+                        <input type="button" value="15%" id="btn" class="btn2" onclick="calculate(15)">
+                    </div>
+                    <div class="sub-percentages">
+                        <input type="button" value="25%" id="btn" class="btn3" onclick="calculate(25)">
+                        <input type="button" value="50%" id="btn" class="btn4" onclick="calculate(50)">
+                        <input type="button" value="Custom" id="special-btn" class="btn5" >
+                    </div>
+                </div>
+                <div class="below-section">
+                    <h5>Number of People</h5>
+                    <img src="./icons/icon-person.svg" id="style2">
+                    <input type="number" id="amount">
+                    <div class="negative-human"></div>
+                </div>
+                </div>
+            </div>
+        </section>
+        <div class="right-section">
+            <section>
+                <div class="Tip-Amount">
+                    <div class="display">
+                        <h5>Tip Amount <br> / Person</h5>
+                        <div class="sub-display">
+                            <img src="./icons/icon-dollar.svg" id="dollar">
+                            <h1 id="value1">0.00</h1>
+                        </div>
+                    </div>
+                    <div class="display">
+                        <h5> Total Amount<br> /Person</h5>
+                        <div class="sub-display">
+                            <img src="./icons/icon-dollar.svg" id="dollar">
+                            <h1 id="value">0.00</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="Reset">
+                <button id="reset" onclick="reset()">RESET</button>
+            </div>
+        </div>
+    </main>
+    <script defer>
+        let percent = 0;
+        function calculate(percent){
+        let billAmount = document.getElementById("amount1").value;
+        let numberOfPeople = document.getElementById("amount").value;
+        let display = document.getElementById("value");
+        let display1 = document.getElementById("value1");
+        let errmsg = document.getElementsByClassName("negative-human")[0];
+        let errempty = document.getElementById("errEmpty");
+
+
+        if(numberOfPeople != '' && billAmount != ''){
+            const result1= (parseFloat(billAmount) * parseFloat(percent/100))/numberOfPeople;
+            const result = parseFloat(billAmount) / parseFloat(numberOfPeople) + result1;
+            if(result < 0 || result1 <0 ||numberOfPeople < 1){
+                errmsg.innerText = "Humans cannot be negative nor less than 1";
+                errempty.innerText = "";
+            }else{
+                display.innerText = `${result.toFixed(2) }`;
+                display1.innerText = `${result1.toFixed(2)}`;
+            }
+        }else{
+            errempty.innerText = "Field cannot be empty";
+            errmsg.innerText = "Field cannot be empty";
+        }
+
+        }
+        function reset(){
+            document.getElementById("amount1").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("value").innerText = "0.0";
+            document.getElementById("value1").innerText = "0.0";
+            document.getElementsByClassName("negative-human")[0].innerText = "";
+            document.getElementById("errEmpty").innerText = "";
+        }
+    </script>
+</body>
+</html>
